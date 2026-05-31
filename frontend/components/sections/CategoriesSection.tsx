@@ -61,9 +61,7 @@ export default function CategoriesSection() {
             </h3>
 
             <div className="flex items-center gap-12">
-              <span className="font-mono text-[0.7rem] text-void-mid tracking-[0.15em]">
-                {cat.count}
-              </span>
+              
               <span
                 className="text-void-mid transition-all duration-400"
                 style={{

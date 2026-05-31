@@ -41,9 +41,6 @@ export default function NewArrivals() {
           <br />
           ARRIVALS
         </h2>
-        <span className="font-mono text-[0.7rem] text-void-mid tracking-[0.15em] pb-3">
-          {filtered.length} PIECES
-        </span>
       </div>
 
       {/* Filter bar */}
