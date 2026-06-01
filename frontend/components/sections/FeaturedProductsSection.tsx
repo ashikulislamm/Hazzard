@@ -2,45 +2,7 @@
 
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import ProductCard from "@/components/ui/ProductCard";
-
-const PRODUCTS = [
-  {
-    id: "fp1",
-    tag: "Best Seller",
-    category: "Sneakers",
-    name: "HAZZARD Runner Obsidian",
-    price: "$485",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=80",
-    link: "#shop",
-  },
-  {
-    id: "fp2",
-    tag: "Top Rated",
-    category: "Leather Jackets",
-    name: "Tactical Shell Jacket",
-    price: "$620",
-    image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80",
-    link: "#collections",
-  },
-  {
-    id: "fp3",
-    tag: "Best Seller",
-    category: "Running Shoes",
-    name: "HAZZARD Runner Chalk",
-    price: "$485",
-    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=1200&q=80",
-    link: "#shop",
-  },
-  {
-    id: "fp4",
-    tag: "Core",
-    category: "Accessories",
-    name: "Utility Shoulder Bag",
-    price: "$185",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1200&q=80",
-    link: "#shop",
-  },
-];
+import { FEATURED_PRODUCTS } from "@/data/products";
 
 export default function FeaturedProductsSection() {
   const sectionRef = useScrollReveal();
@@ -77,16 +39,16 @@ export default function FeaturedProductsSection() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-[2px]">
-        {PRODUCTS.map((product) => (
+        {FEATURED_PRODUCTS.map((product) => (
           <ProductCard
             key={product.id}
             mode="featured"
             image={product.image}
             name={product.name}
             category={product.category}
-            price={product.price}
-            tag={product.tag}
-            href={product.link}
+            price={`$${product.price}`}
+            tag={product.featuredTag}
+            href={`/products/${product.slug}`}
           />
         ))}
       </div>

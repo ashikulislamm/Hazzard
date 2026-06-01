@@ -3,29 +3,20 @@
 import { useState } from "react";
 import { useCart } from "@/components/ui/CartContext";
 import ProductCard from "@/components/ui/ProductCard";
+import { PRODUCT_CATEGORIES, PRODUCTS, sortProducts } from "@/data/products";
 
-const FILTERS = ["All", "Sneakers", "Jackets", "Hoodies", "T-Shirts", "Accessories"];
 const SORTS = ["Newest", "Price ↑", "Price ↓", "A–Z"];
 
-const ALL_PRODUCTS = [
-  { id: "s1", label: "V1", cat: "Sneakers", name: "HAZZARD Runner Obsidian", price: 485, isNew: true, ratio: "aspect-[3/4]", image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=1000&q=80" },
-  { id: "s2", label: "J1", cat: "Jackets", name: "Tactical Shell Jacket", price: 620, isNew: false, ratio: "aspect-square", image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80" },
-  { id: "s3", label: "H1", cat: "Hoodies", name: "Heavyweight Arch Hoodie", price: 245, isNew: true, ratio: "aspect-[3/4]", image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1000&q=80" },
-  { id: "s4", label: "T1", cat: "T-Shirts", name: "Oversized Hazzard Tee", price: 95, isNew: false, ratio: "aspect-[3/4]", image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=80" },
-  { id: "s5", label: "V2", cat: "Sneakers", name: "HAZZARD Runner Chalk", price: 485, isNew: true, ratio: "aspect-[3/4]", image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=1000&q=80" },
-  { id: "s6", label: "A1", cat: "Accessories", name: "Utility Shoulder Bag", price: 185, isNew: false, ratio: "aspect-[4/3]", image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=1200&q=80" },
-  { id: "s7", label: "J2", cat: "Jackets", name: "Waxed Cotton Parka", price: 740, isNew: false, ratio: "aspect-[3/4]", image: "https://images.unsplash.com/photo-1548126032-079a0fb0099d?auto=format&fit=crop&w=1000&q=80" },
-  { id: "s8", label: "H2", cat: "Hoodies", name: "Zip-up Hazzard Hoodie", price: 195, isNew: true, ratio: "aspect-square", image: "https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1200&q=80" },
-  { id: "s9", label: "T2", cat: "T-Shirts", name: "Thermal Contrast Tee", price: 110, isNew: false, ratio: "aspect-[3/4]", image: "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1000&q=80" },
-];
+const FILTERS = ["All", ...PRODUCT_CATEGORIES];
 
 export default function ShopPage() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [activeSort, setActiveSort] = useState("Newest");
   const { addItem } = useCart();
 
-  const filtered = ALL_PRODUCTS.filter(
-    (p) => activeFilter === "All" || p.cat === activeFilter
+  const filtered = sortProducts(
+    PRODUCTS.filter((product) => activeFilter === "All" || product.category === activeFilter),
+    activeSort
   );
 
   return (
@@ -84,14 +75,15 @@ export default function ShopPage() {
                 key={p.id}
                 image={p.image}
                 name={p.name}
-                category={p.cat}
+                category={p.category}
                 price={`$${p.price}`}
                 label={p.label}
                 isNew={p.isNew}
+                href={`/products/${p.slug}`}
                 onQuickAdd={() =>
-                  addItem({ id: p.id, name: p.name, variant: `${p.cat} · M`, price: p.price, label: p.label })
+                  addItem({ id: p.id, name: p.name, variant: `${p.category} · M`, price: p.price, label: p.label })
                 }
-                mediaClassName={p.ratio === "aspect-square" ? "h-[250px] sm:h-[270px]" : "h-[250px] sm:h-[270px]"}
+                mediaClassName="h-[250px] sm:h-[270px]"
               />
             ))}
           </div>

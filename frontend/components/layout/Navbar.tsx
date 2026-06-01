@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useCart } from "@/components/ui/CartContext";
 import { HiOutlineBars3, HiOutlineMagnifyingGlass, HiOutlineShoppingBag, HiOutlineUserCircle, HiOutlineXMark } from "react-icons/hi2";
@@ -9,8 +9,10 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { toggleCart, items } = useCart();
+  const accountMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -30,6 +32,34 @@ export default function Navbar() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [searchOpen]);
+
+  useEffect(() => {
+    if (!accountMenuOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setAccountMenuOpen(false);
+      }
+    };
+
+    const onPointerDown = (event: MouseEvent | TouchEvent) => {
+      if (accountMenuRef.current?.contains(event.target as Node)) {
+        return;
+      }
+
+      setAccountMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("touchstart", onPointerDown);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("touchstart", onPointerDown);
+    };
+  }, [accountMenuOpen]);
 
   const navLinks = [
     { label: "Collections", href: "#collections" },
@@ -77,6 +107,7 @@ export default function Navbar() {
           aria-controls="mobile-menu-panel"
           onClick={() => {
             setSearchOpen(false);
+            setAccountMenuOpen(false);
             setMobileMenuOpen((value) => !value);
           }}
           className="inline-flex lg:hidden rounded-full border border-white/10 bg-white/5 p-2 text-[1.5rem] sm:text-2xl text-white/90 hover:bg-white/10 hover:text-white transition-colors"
@@ -89,15 +120,50 @@ export default function Navbar() {
           aria-controls="search-panel"
           onClick={() => {
             setMobileMenuOpen(false);
+            setAccountMenuOpen(false);
             setSearchOpen((value) => !value);
           }}
           className="rounded-full border border-white/10 bg-white/5 p-2 text-[1.5rem] sm:text-2xl md:text-[1.7rem] text-white/90 hover:bg-white/10 hover:text-white transition-colors"
         >
           <HiOutlineMagnifyingGlass />
         </button>
-        <button aria-label="Account" className="hidden sm:inline-flex rounded-full border border-white/10 bg-white/5 p-2 text-[1.5rem] sm:text-2xl md:text-[1.7rem] text-white/90 hover:bg-white/10 hover:text-white transition-colors">
-          <HiOutlineUserCircle />
-        </button>
+        <div ref={accountMenuRef} className="relative hidden sm:block">
+          <button
+            aria-label="Account"
+            aria-expanded={accountMenuOpen}
+            aria-controls="account-menu"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              setSearchOpen(false);
+              setAccountMenuOpen((value) => !value);
+            }}
+            className="inline-flex rounded-full border border-white/10 bg-white/5 p-2 text-[1.5rem] sm:text-2xl md:text-[1.7rem] text-white/90 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <HiOutlineUserCircle />
+          </button>
+
+          {accountMenuOpen ? (
+            <div
+              id="account-menu"
+              className="absolute right-0 top-full mt-3 w-48 overflow-hidden rounded-2xl border border-white/10 bg-black/95 shadow-[0_18px_60px_rgba(0,0,0,0.38)] backdrop-blur-2xl"
+            >
+              <Link
+                href="/login"
+                onClick={() => setAccountMenuOpen(false)}
+                className="block border-b border-white/10 px-4 py-3 font-mono text-[0.76rem] tracking-[0.18em] uppercase text-white/85 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                onClick={() => setAccountMenuOpen(false)}
+                className="block px-4 py-3 font-mono text-[0.76rem] tracking-[0.18em] uppercase text-white/85 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                Signup
+              </Link>
+            </div>
+          ) : null}
+        </div>
         <button
           onClick={toggleCart}
           className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 font-mono text-[0.82rem] sm:text-[0.92rem] md:text-[0.98rem] tracking-[0.13em] uppercase text-white/90 hover:bg-white/10 hover:text-white transition-colors"
