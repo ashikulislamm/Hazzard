@@ -89,7 +89,7 @@ export default function ProductCard({
   }
 
   return (
-    <article className={`bg-black relative overflow-hidden group cursor-none ${className}`}>
+    <article className={`bg-black/55 backdrop-blur-2xl border border-white/10 rounded-2xl relative overflow-hidden group cursor-none shadow-[0_20px_50px_rgba(0,0,0,0.3)] ${className}`}>
       {href ? (
         <Link
           href={href}
@@ -127,12 +127,17 @@ export default function ProductCard({
         </div>
       ) : null}
 
-      <div className="relative z-20 p-5">
-        <p className="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-void-mid mb-1">
-          {category}
-        </p>
-        <p className="text-[0.85rem] tracking-[0.05em] mb-2">{name}</p>
-        <p className="font-mono text-[0.75rem]">{price}</p>
+      <div className="relative z-20 p-5 bg-black/45 border-t border-white/10 overflow-hidden">
+        {/* Silverish gradient shine matching the login/signup page style */}
+        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.08),transparent_40%)] transition-opacity duration-300 group-hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.14),transparent_40%)] pointer-events-none" />
+        
+        <div className="relative z-10">
+          <p className="font-mono text-[0.65rem] tracking-[0.2em] uppercase text-void-mid mb-1">
+            {category}
+          </p>
+          <p className="text-[0.85rem] tracking-[0.05em] mb-2 text-white/90 group-hover:text-white transition-colors duration-300">{name}</p>
+          <p className="font-mono text-[0.75rem] text-white/80 group-hover:text-white transition-colors duration-300">{price}</p>
+        </div>
       </div>
     </article>
   );

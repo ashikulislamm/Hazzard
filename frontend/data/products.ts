@@ -2,6 +2,7 @@ export type Product = {
   id: string;
   slug: string;
   label: string;
+  brand: string;
   category: string;
   name: string;
   price: number;
@@ -38,6 +39,7 @@ export const PRODUCTS: Product[] = [
     id: "p1",
     slug: "runner-obsidian",
     label: "V1",
+    brand: "HAZZARD",
     category: "Sneakers",
     name: "HAZZARD Runner Obsidian",
     price: 485,
@@ -84,6 +86,7 @@ export const PRODUCTS: Product[] = [
     id: "p2",
     slug: "tactical-shell-jacket",
     label: "J1",
+    brand: "HAZZARD LABS",
     category: "Jackets",
     name: "Tactical Shell Jacket",
     price: 620,
@@ -129,6 +132,7 @@ export const PRODUCTS: Product[] = [
     id: "p3",
     slug: "heavyweight-arch-hoodie",
     label: "H1",
+    brand: "VOID STUDIO",
     category: "Hoodies",
     name: "Heavyweight Arch Hoodie",
     price: 245,
@@ -173,6 +177,7 @@ export const PRODUCTS: Product[] = [
     id: "p4",
     slug: "oversized-hazzard-tee",
     label: "T1",
+    brand: "HAZZARD",
     category: "Tees",
     name: "Oversized Hazzard Tee",
     price: 95,
@@ -217,6 +222,7 @@ export const PRODUCTS: Product[] = [
     id: "p5",
     slug: "runner-chalk",
     label: "V2",
+    brand: "HAZZARD",
     category: "Sneakers",
     name: "HAZZARD Runner Chalk",
     price: 485,
@@ -263,7 +269,8 @@ export const PRODUCTS: Product[] = [
     id: "p6",
     slug: "utility-shoulder-bag",
     label: "A1",
-    category: "Accessories",
+    brand: "VOID STUDIO",
+    category: "Bags",
     name: "Utility Shoulder Bag",
     price: 185,
     image:
@@ -305,6 +312,7 @@ export const PRODUCTS: Product[] = [
     id: "p7",
     slug: "waxed-cotton-parka",
     label: "J2",
+    brand: "HAZZARD LABS",
     category: "Jackets",
     name: "Waxed Cotton Parka",
     price: 740,
@@ -349,6 +357,7 @@ export const PRODUCTS: Product[] = [
     id: "p8",
     slug: "zip-up-hazzard-hoodie",
     label: "H2",
+    brand: "HAZZARD",
     category: "Hoodies",
     name: "Zip-up Hazzard Hoodie",
     price: 195,
@@ -393,6 +402,7 @@ export const PRODUCTS: Product[] = [
     id: "p9",
     slug: "thermal-contrast-tee",
     label: "T2",
+    brand: "VOID STUDIO",
     category: "Tees",
     name: "Thermal Contrast Tee",
     price: 110,
@@ -433,9 +443,101 @@ export const PRODUCTS: Product[] = [
       { size: "XL", chest: "116 cm", length: "75 cm", fit: "Slim relaxed" },
     ],
   },
+  {
+    id: "p10",
+    slug: "hazzard-derby-shoes",
+    label: "S1",
+    brand: "HAZZARD LABS",
+    category: "Shoes",
+    name: "HAZZARD Derby Shoes",
+    price: 380,
+    image:
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1200&q=80",
+    ],
+    colors: [
+      { name: "Black Matte", hex: "#1c1c1c" },
+      { name: "Mahogany", hex: "#4a2c20" },
+    ],
+    sizes: ["EU 40", "EU 41", "EU 42", "EU 43", "EU 44"],
+    rating: 4.7,
+    reviewCount: 42,
+    description:
+      "Polished box leather Derby shoes featuring a chunkier profile and custom HAZZARD steel hardware details.",
+    isNew: true,
+    isBestSeller: false,
+    features: [
+      "Box leather upper",
+      "Chunky rubber outsole",
+      "Metal plate brand detail",
+    ],
+    details: {
+      fit: "Half size large",
+      material: "100% Calfskin leather",
+      origin: "Made in Portugal",
+      care: "Clean with leather conditioner",
+    },
+    sizeGuide: [
+      { size: "EU 40", chest: "N/A", length: "26.3 cm", fit: "Slightly large" },
+      { size: "EU 41", chest: "N/A", length: "27 cm", fit: "Slightly large" },
+      { size: "EU 42", chest: "N/A", length: "27.7 cm", fit: "Slightly large" },
+      { size: "EU 43", chest: "N/A", length: "28.4 cm", fit: "Slightly large" },
+      { size: "EU 44", chest: "N/A", length: "29.1 cm", fit: "Slightly large" },
+    ],
+  },
+  {
+    id: "p11",
+    slug: "void-leather-tote",
+    label: "B1",
+    brand: "VOID STUDIO",
+    category: "Bags",
+    name: "VOID Leather Tote",
+    price: 320,
+    image:
+      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1200&q=80",
+    ],
+    colors: [
+      { name: "Black Grain", hex: "#121213" },
+      { name: "Bone", hex: "#e5e2da" },
+    ],
+    sizes: ["One Size"],
+    rating: 4.8,
+    reviewCount: 31,
+    description:
+      "A structured tote bag in full-grain calfskin leather, designed with raw edges and internal laptop sleeve.",
+    isNew: true,
+    isBestSeller: true,
+    features: [
+      "Full-grain cowhide",
+      "Unlined raw-edge interior",
+      "Padded device divider",
+    ],
+    details: {
+      fit: "One size",
+      material: "Full-grain calf leather",
+      origin: "Made in Spain",
+      care: "Wipe with soft dry cloth; avoid moisture",
+    },
+    sizeGuide: [
+      { size: "One Size", chest: "N/A", length: "42 cm", fit: "Universal" },
+    ],
+  },
 ];
 
-export const PRODUCT_CATEGORIES = ["Sneakers", "Jackets", "Hoodies", "Tees", "Accessories"] as const;
+export const PRODUCT_CATEGORIES = [
+  "Sneakers",
+  "Shoes",
+  "Bags",
+  "Jackets",
+  "Hoodies",
+  "Tees",
+  "Accessories",
+] as const;
 
 export const NEW_ARRIVALS = PRODUCTS.filter((product) => product.isNew);
 
