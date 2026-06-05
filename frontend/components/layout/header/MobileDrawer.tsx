@@ -10,8 +10,11 @@ import {
   LuShoppingBag,
   LuUser,
   LuChevronRight,
+  LuChevronDown,
   LuPlus,
   LuMinus,
+  LuSettings,
+  LuLogOut,
 } from "react-icons/lu";
 import {
   FaInstagram,
@@ -32,6 +35,7 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
   const { items, toggleCart } = useCart();
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const [accountOpen, setAccountOpen] = useState(false);
 
   // Lock scroll when drawer is open
   useEffect(() => {
@@ -207,40 +211,80 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
               <div className="space-y-4">
                 <p className="text-[10px] font-mono tracking-widest text-white/30 uppercase">Quick Actions</p>
                 <div className="grid grid-cols-2 gap-3.5">
-                  <Link
-                    href="/login"
-                    onClick={onClose}
+                  {/* Account Toggle Button */}
+                  <div className="relative">
+                    <button
+                      onClick={() => setAccountOpen(!accountOpen)}
+                      className="w-full flex items-center gap-2.5 justify-center py-3 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] text-[11px] font-mono text-white/80 transition-colors cursor-none"
+                    >
+                      <LuUser className="w-4 h-4 text-white/40" />
+                      <span>Account</span>
+                      <LuChevronDown className={`w-3 h-3 text-white/40 transition-transform duration-300 ${accountOpen ? "rotate-180" : ""}`} />
+                    </button>
+
+                    <AnimatePresence>
+                      {accountOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25, ease: "easeInOut" }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-2 bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden">
+                            <div className="px-4 py-3 border-b border-white/10 bg-white/[0.02]">
+                              <p className="text-[9px] font-mono tracking-widest text-white/40 uppercase">Signed in as</p>
+                              <p className="text-[11px] font-semibold text-white/95 truncate mt-0.5">guest@hazzard.com</p>
+                            </div>
+                            {[
+                              { label: "My Profile", href: "/profile", icon: LuUser },
+                              { label: "Orders", href: "/profile/orders", icon: LuShoppingBag },
+                              { label: "Wishlist", href: "/shop?filter=wishlist", icon: LuHeart },
+                              { label: "Settings", href: "/profile/settings", icon: LuSettings },
+                            ].map((item) => {
+                              const Icon = item.icon;
+                              return (
+                                <Link
+                                  key={item.label}
+                                  href={item.href}
+                                  onClick={() => { onClose(); }}
+                                  className="flex items-center gap-3 px-4 py-3 text-[11px] font-mono text-white/70 hover:text-white hover:bg-white/[0.04] transition-colors cursor-none"
+                                >
+                                  <Icon className="w-3.5 h-3.5 text-white/40" />
+                                  <span>{item.label}</span>
+                                </Link>
+                              );
+                            })}
+                            <div className="border-t border-white/10">
+                              <button
+                                onClick={() => { setAccountOpen(false); }}
+                                className="w-full flex items-center gap-3 px-4 py-3 text-[11px] font-mono text-red-400 hover:text-red-300 hover:bg-red-500/[0.04] transition-colors cursor-none"
+                              >
+                                <LuLogOut className="w-3.5 h-3.5 text-red-400/50" />
+                                <span>Logout</span>
+                              </button>
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Cart Button */}
+                  <button
+                    onClick={() => {
+                      onClose();
+                      setTimeout(() => toggleCart(), 300);
+                    }}
                     className="flex items-center gap-2.5 justify-center py-3 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] text-[11px] font-mono text-white/80 transition-colors cursor-none"
                   >
-                    <LuUser className="w-4 h-4 text-white/40" />
-                    <span>Account</span>
-                  </Link>
-
-                  <Link
-                    href="/shop?filter=wishlist"
-                    onClick={onClose}
-                    className="flex items-center gap-2.5 justify-center py-3 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] text-[11px] font-mono text-white/80 transition-colors cursor-none"
-                  >
-                    <LuHeart className="w-4 h-4 text-white/40" />
-                    <span>Wishlist</span>
-                  </Link>
-                </div>
-
-                <button
-                  onClick={() => {
-                    onClose();
-                    setTimeout(() => toggleCart(), 300);
-                  }}
-                  className="w-full flex items-center justify-between px-5 py-3.5 rounded-xl border border-white/10 bg-white/[0.04] text-[11px] font-mono text-white transition-colors cursor-none"
-                >
-                  <span className="flex items-center gap-2.5">
                     <LuShoppingBag className="w-4 h-4 text-white/40" />
-                    <span>Shopping Cart</span>
-                  </span>
-                  <span className="bg-white text-black font-sans font-bold text-[10px] w-5 h-5 flex items-center justify-center rounded-full">
-                    {items.length}
-                  </span>
-                </button>
+                    <span>Cart</span>
+                    <span className="bg-white text-black font-sans font-bold text-[9px] w-5 h-5 flex items-center justify-center rounded-full">
+                      {items.length}
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
 

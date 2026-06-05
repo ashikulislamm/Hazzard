@@ -7,6 +7,8 @@ import { LuSearch, LuHeart, LuUser, LuShoppingBag, LuMenu } from "react-icons/lu
 import { useCart } from "@/components/ui/CartContext";
 import AccountDropdown from "./AccountDropdown";
 import { iconHoverVariants, badgeVariants } from "./animations";
+import Logo from "@/public/logo.png";
+import Image from "next/image";
 
 interface MainHeaderProps {
   onOpenSearch: () => void;
@@ -59,8 +61,8 @@ export default function MainHeader({
               onClick={onOpenSearch}
               className="w-full flex items-center gap-3.5 bg-white/[0.04] border border-white/10 hover:border-white/25 hover:bg-white/[0.08] hover:shadow-[0_0_20px_rgba(255,255,255,0.03)] px-5 py-3 rounded-full text-white/40 hover:text-white/60 transition-all duration-300 text-left focus:outline-none focus:border-white/40 cursor-none"
             >
-              <LuSearch className="w-4 h-4 text-white/50" />
-              <span className="font-mono text-[11px] tracking-wider">Search sneakers, jackets, bags...</span>
+              <LuSearch className="w-5 h-5 text-white/50" />
+              <span className="font-mono text-xs tracking-wider">Search sneakers, jackets, bags...</span>
             </button>
           </div>
 
@@ -80,27 +82,17 @@ export default function MainHeader({
             href="/"
             className="font-display text-[1.8rem] sm:text-[2.2rem] md:text-[2.6rem] tracking-[0.28em] text-white hover:text-white/90 transition-all duration-300 select-none cursor-none flex items-center gap-1"
           >
-            HAZZARD
+            <Image src={Logo} alt="Hazzard Logo" width={180} height={180} />
+            
           </Link>
         </div>
 
         {/* Right Column: Actions (Wishlist, Account, Cart) */}
         <div className="flex items-center justify-end gap-3.5 md:gap-5 lg:gap-6">
-          {/* Wishlist Icon */}
-          <Link
-            href="/shop?filter=wishlist"
-            className="hidden sm:flex items-center gap-2 text-white/70 hover:text-white transition-colors duration-300 cursor-none py-1 group"
-            aria-label="Wishlist"
-          >
-            <motion.div whileHover={{ scale: 1.15, rotate: [0, -10, 10, 0] }} transition={{ duration: 0.3 }}>
-              <LuHeart className="w-[18px] h-[18px] text-white/50 group-hover:text-red-500 transition-colors" />
-            </motion.div>
-            <span className="font-mono text-[10px] tracking-widest uppercase hidden lg:inline">Wishlist</span>
-          </Link>
 
           {/* Account Icon + Hover Dropdown */}
           <div
-            className="relative"
+            className="hidden lg:flex relative"
             onMouseEnter={() => setAccountHovered(true)}
             onMouseLeave={() => setAccountHovered(false)}
           >
@@ -112,7 +104,7 @@ export default function MainHeader({
               <motion.div whileHover="hover" variants={iconHoverVariants}>
                 <LuUser className="w-[18px] h-[18px] text-white/50" />
               </motion.div>
-              <span className="font-mono text-[10px] tracking-widest uppercase hidden lg:inline">Account</span>
+              <span className="font-mono text-xs tracking-widest uppercase hidden lg:inline">Account</span>
             </Link>
 
             <AnimatePresence>
@@ -136,7 +128,7 @@ export default function MainHeader({
                 <LuShoppingBag className="w-[16px] h-[16px] text-white/75 group-hover:text-white transition-colors" />
               </motion.div>
               
-              <span className="font-mono text-[10.5px] tracking-wider uppercase hidden sm:inline text-white/80 group-hover:text-white">
+              <span className="font-mono text-xs tracking-wider uppercase hidden sm:inline text-white/80 group-hover:text-white">
                 Bag
               </span>
 
@@ -144,7 +136,7 @@ export default function MainHeader({
               <motion.span
                 variants={badgeVariants}
                 animate={shouldPulse ? "pulse" : "initial"}
-                className="bg-white text-black font-sans font-extrabold text-[9.5px] w-5 h-5 flex items-center justify-center rounded-full shadow-lg shadow-black/30"
+                className="bg-white text-black font-sans font-extrabold text-[11px] w-6 h-6 flex items-center justify-center rounded-full shadow-lg shadow-black/30"
               >
                 {items.length}
               </motion.span>

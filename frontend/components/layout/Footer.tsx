@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import Image from "next/image";
+import Logo from "@/public/logo.png";
 
 const footerLinkSections = [
   {
@@ -39,7 +41,7 @@ export default function Footer() {
               viewport={{ once: true }}
               className="mb-8 text-3xl font-bold tracking-tighter"
             >
-              HAZZARD
+              <Image src={Logo} alt="Hazzard Logo" width={180} height={180} />
             </motion.h3>
             <p className="text-white/60">Redefining fashion through minimalism and purpose.</p>
           </div>
