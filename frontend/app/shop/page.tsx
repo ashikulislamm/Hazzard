@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useCart } from "@/components/ui/CartContext";
+import { useCartStore } from "@/store/useCartStore";
 import ProductCard from "@/components/ui/ProductCard";
 import { PRODUCT_CATEGORIES, PRODUCTS, sortProducts } from "@/data/products";
 
@@ -22,7 +22,7 @@ export default function ShopPage() {
   const [appliedPriceLimit, setAppliedPriceLimit] = useState(800);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const { addItem } = useCart();
+  const { addItem } = useCartStore();
 
   const getCategoryCount = (category: string) => {
     return PRODUCTS.filter((p) => {

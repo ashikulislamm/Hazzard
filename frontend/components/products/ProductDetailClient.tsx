@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useCart } from "@/components/ui/CartContext";
-import type { Product } from "@/data/products";
+import { useRouter } from "next/navigation";
+import { useCartStore } from "@/store/useCartStore";
+import type { Product } from "@/types";
 
 type ProductDetailClientProps = {
   product: Product;
@@ -24,7 +25,8 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
-  const { addItem, openCart } = useCart();
+  const { addItem, openCart } = useCartStore();
+  const router = useRouter();
   const gallery = [product.image, ...product.gallery.filter((image) => image !== product.image)];
   const [selectedImage, setSelectedImage] = useState(gallery[0]);
   const [selectedSize, setSelectedSize] = useState(product.sizes[0] ?? "");
@@ -39,11 +41,28 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
     addItem({
       id: product.id,
       name: product.name,
-      variant: `${selectedColor}${selectedSize ? ` · ${selectedSize}` : ""} x${quantity}`,
-      price: product.price * quantity,
+      variant: selectedColor && selectedSize 
+        ? `${selectedColor} · ${selectedSize}` 
+        : selectedColor || selectedSize || "M",
+      price: product.price,
       label: product.label,
+      quantity: quantity,
     });
     openCart();
+  };
+
+  const handleBuyNow = () => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      variant: selectedColor && selectedSize 
+        ? `${selectedColor} · ${selectedSize}` 
+        : selectedColor || selectedSize || "M",
+      price: product.price,
+      label: product.label,
+      quantity: quantity,
+    });
+    router.push("/checkout");
   };
 
   return (
@@ -245,6 +264,7 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
               </button>
               <button
                 type="button"
+                onClick={handleBuyNow}
                 className="rounded-full border border-white/10 bg-white/[0.04] px-6 py-4 font-mono text-[0.76rem] tracking-[0.22em] uppercase text-white transition-colors hover:bg-white/[0.08]"
               >
                 Buy Now

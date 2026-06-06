@@ -10,14 +10,14 @@ import {
   LuLogOut,
 } from "react-icons/lu";
 import { dropdownVariants } from "./animations";
-import { useAuth } from "@/components/ui/AuthContext";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface AccountDropdownProps {
   onClose: () => void;
 }
 
 export default function AccountDropdown({ onClose }: AccountDropdownProps) {
-  const { user, logout, isInitialized } = useAuth();
+  const { user, logout, isInitialized } = useAuthStore();
 
   const menuItems = [
     { label: "My Profile", href: "/profile", icon: LuUser },

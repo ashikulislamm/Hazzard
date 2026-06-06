@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAuth } from "@/components/ui/AuthContext";
+import { useAuthStore } from "@/store/useAuthStore";
 
 export default function LoginForm() {
-  const { login } = useAuth();
+  const { login } = useAuthStore();
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AuthProvider } from "@/components/ui/AuthContext";
-import { CartProvider } from "@/components/ui/CartContext";
+import QueryProvider from "@/providers/QueryProvider";
+import AuthProvider from "@/providers/AuthProvider";
 import SiteChrome from "@/components/layout/SiteChrome";
 import "./globals.css";
 
@@ -55,13 +55,14 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col">
-        <AuthProvider>
-          <CartProvider>
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <QueryProvider>
+          <AuthProvider>
             <SiteChrome>{children}</SiteChrome>
-          </CartProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );

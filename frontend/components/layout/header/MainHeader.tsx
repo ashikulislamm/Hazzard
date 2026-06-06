@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { LuSearch, LuHeart, LuUser, LuShoppingBag, LuMenu } from "react-icons/lu";
-import { useCart } from "@/components/ui/CartContext";
+import { useCartStore } from "@/store/useCartStore";
 import AccountDropdown from "./AccountDropdown";
 import { iconHoverVariants, badgeVariants } from "./animations";
 import Logo from "@/public/logo.png";
@@ -21,7 +21,7 @@ export default function MainHeader({
   onOpenMobileMenu,
   isSticky,
 }: MainHeaderProps) {
-  const { toggleCart, items } = useCart();
+  const { toggleCart, items } = useCartStore();
   const [accountHovered, setAccountHovered] = useState(false);
   const [prevCartCount, setPrevCartCount] = useState(items.length);
   const [shouldPulse, setShouldPulse] = useState(false);
@@ -29,6 +29,7 @@ export default function MainHeader({
   // Cart badge pulse animation when items count changes
   useEffect(() => {
     if (items.length > prevCartCount) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShouldPulse(true);
       const timer = setTimeout(() => setShouldPulse(false), 500);
       return () => clearTimeout(timer);

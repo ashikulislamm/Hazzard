@@ -49,7 +49,7 @@ export default function BrandStory() {
         <p className="font-editorial italic text-void-mid leading-[1.8] max-w-[700px] mx-auto mb-16"
           style={{ fontSize: "clamp(18px, 2vw, 24px)" }}
         >
-          We don't make clothes. We architect identity. Every silhouette, every stitch, every sole is a manifesto against the ordinary. Wear nothing. Wear everything. Wear HAZZARD.
+          We don&apos;t make clothes. We architect identity. Every silhouette, every stitch, every sole is a manifesto against the ordinary. Wear nothing. Wear everything. Wear HAZZARD.
         </p>
 
         {/* CTA */}

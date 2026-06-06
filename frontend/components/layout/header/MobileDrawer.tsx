@@ -24,8 +24,8 @@ import {
 } from "react-icons/fa";
 import { NAV_ITEMS, SOCIAL_LINKS, MEGA_MENUS } from "./data";
 import { mobileDrawerVariants } from "./animations";
-import { useCart } from "@/components/ui/CartContext";
-import { useAuth } from "@/components/ui/AuthContext";
+import { useCartStore } from "@/store/useCartStore";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -33,8 +33,8 @@ interface MobileDrawerProps {
 }
 
 export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
-  const { items, toggleCart } = useCart();
-  const { user, logout } = useAuth();
+  const { items, toggleCart } = useCartStore();
+  const { user, logout } = useAuthStore();
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [accountOpen, setAccountOpen] = useState(false);

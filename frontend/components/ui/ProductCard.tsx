@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { LuHeart, LuShoppingBag } from "react-icons/lu";
-import { useCart } from "@/components/ui/CartContext";
+import { useCartStore } from "@/store/useCartStore";
 import { PRODUCTS, type Product } from "@/data/products";
 
 type ProductCardMode = "catalog" | "featured";
@@ -62,7 +62,7 @@ export default function ProductCard({
   const itemColors = productData?.colors ?? [];
   const itemSizes = productData?.sizes ?? [];
 
-  const { addItem, openCart } = useCart();
+  const { addItem, openCart } = useCartStore();
   const router = useRouter();
 
   const [isWishlisted, setIsWishlisted] = useState(false);
@@ -70,6 +70,7 @@ export default function ProductCard({
   useEffect(() => {
     if (productData?.id) {
       const wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsWishlisted(wishlist.includes(productData.id));
     }
   }, [productData?.id]);

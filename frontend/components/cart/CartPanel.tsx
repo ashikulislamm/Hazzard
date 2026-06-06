@@ -1,8 +1,10 @@
 "use client";
-import { useCart } from "@/components/ui/CartContext";
+import { useCartStore } from "@/store/useCartStore";
+import Link from "next/link";
 
 export default function CartPanel() {
-  const { isOpen, closeCart, items, total, removeItem } = useCart();
+  const { isOpen, closeCart, items, removeItem, updateQuantity } = useCartStore();
+  const total = useCartStore((state) => state.total);
 
   return (
     <>
@@ -27,7 +29,7 @@ export default function CartPanel() {
           </span>
           <button
             onClick={closeCart}
-            className="text-void-white/50 hover:text-void-white transition-colors text-xl leading-none"
+            className="text-void-white/50 hover:text-void-white transition-colors text-xl leading-none cursor-none"
           >
             ✕
           </button>
@@ -42,7 +44,7 @@ export default function CartPanel() {
           )}
           {items.map((item) => (
             <div
-              key={item.id}
+              key={`${item.id}-${item.variant}`}
               className="flex gap-6 pb-8 border-b border-white/[0.06] last:border-0"
             >
               {/* Thumb */}
@@ -64,16 +66,38 @@ export default function CartPanel() {
                 <p className="font-mono text-[0.65rem] tracking-[0.15em] uppercase text-void-mid">
                   {item.variant}
                 </p>
+                
+                {/* Quantity Controls */}
+                <div className="flex items-center border border-white/10 rounded-xl bg-white/[0.03] overflow-hidden mt-3 w-fit">
+                  <button
+                    onClick={() => updateQuantity(item.id, item.variant, item.quantity - 1)}
+                    className="px-2.5 py-1 text-void-mid hover:text-white transition-colors text-xs font-mono cursor-none"
+                  >
+                    -
+                  </button>
+                  <span className="px-2 text-[0.7rem] font-mono tracking-wider min-w-[20px] text-center">
+                    {item.quantity}
+                  </span>
+                  <button
+                    onClick={() => updateQuantity(item.id, item.variant, item.quantity + 1)}
+                    className="px-2.5 py-1 text-void-mid hover:text-white transition-colors text-xs font-mono cursor-none"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+              
+              <div className="flex flex-col justify-between items-end">
+                <button
+                  onClick={() => removeItem(item.id, item.variant)}
+                  className="text-void-mid hover:text-void-white text-sm self-start transition-colors cursor-none"
+                >
+                  ✕
+                </button>
                 <p className="font-mono text-[0.8rem] mt-3">
-                  ${item.price}
+                  ${item.price * item.quantity}
                 </p>
               </div>
-              <button
-                onClick={() => removeItem(item.id)}
-                className="text-void-mid hover:text-void-white text-sm self-start transition-colors"
-              >
-                ✕
-              </button>
             </div>
           ))}
         </div>
@@ -91,9 +115,13 @@ export default function CartPanel() {
           <p className="font-mono text-[0.6rem] tracking-[0.15em] text-void-mid uppercase mb-6">
             Free shipping on orders over $500
           </p>
-          <button className="w-full py-5 bg-void-white text-void-black font-display text-base tracking-[0.3em] uppercase hover:bg-void-gray transition-colors duration-300 active:scale-y-[0.97] transition-transform">
+          <Link
+            href="/checkout"
+            onClick={closeCart}
+            className="w-full py-5 bg-void-white text-void-black font-display text-base tracking-[0.3em] uppercase hover:bg-void-gray transition-colors duration-300 active:scale-y-[0.97] transition-transform block text-center cursor-none"
+          >
             CHECKOUT →
-          </button>
+          </Link>
         </div>
       </aside>
     </>

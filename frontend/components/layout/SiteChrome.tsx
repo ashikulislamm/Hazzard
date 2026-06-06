@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import CartPanel from "@/components/ui/CartPanel";
+import CartPanel from "@/components/cart/CartPanel";
 import CustomCursor from "@/components/ui/CustomCursor";
 
 export default function SiteChrome({ children }: { children: React.ReactNode }) {
@@ -19,4 +19,4 @@ export default function SiteChrome({ children }: { children: React.ReactNode }) 
       {showFullChrome ? <Footer /> : null}
     </>
   );
-}
+}

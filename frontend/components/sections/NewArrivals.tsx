@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { useCart } from "@/components/ui/CartContext";
 import ProductCard from "@/components/ui/ProductCard";
 import { NEW_ARRIVALS, PRODUCT_CATEGORIES } from "@/data/products";
 
@@ -11,7 +10,6 @@ const FILTERS = ["All", ...PRODUCT_CATEGORIES];
 export default function NewArrivals() {
   const sectionRef = useScrollReveal();
   const [activeFilter, setActiveFilter] = useState("All");
-  const { addItem } = useCart();
 
   const filtered =
     activeFilter === "All"
