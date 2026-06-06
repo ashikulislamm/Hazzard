@@ -25,6 +25,7 @@ import {
 import { NAV_ITEMS, SOCIAL_LINKS, MEGA_MENUS } from "./data";
 import { mobileDrawerVariants } from "./animations";
 import { useCart } from "@/components/ui/CartContext";
+import { useAuth } from "@/components/ui/AuthContext";
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -33,6 +34,7 @@ interface MobileDrawerProps {
 
 export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
   const { items, toggleCart } = useCart();
+  const { user, logout } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
   const [accountOpen, setAccountOpen] = useState(false);
@@ -232,38 +234,63 @@ export default function MobileDrawer({ isOpen, onClose }: MobileDrawerProps) {
                           className="overflow-hidden"
                         >
                           <div className="mt-2 bg-white/[0.03] border border-white/10 rounded-xl overflow-hidden">
-                            <div className="px-4 py-3 border-b border-white/10 bg-white/[0.02]">
-                              <p className="text-[9px] font-mono tracking-widest text-white/40 uppercase">Signed in as</p>
-                              <p className="text-[11px] font-semibold text-white/95 truncate mt-0.5">guest@hazzard.com</p>
-                            </div>
-                            {[
-                              { label: "My Profile", href: "/profile", icon: LuUser },
-                              { label: "Orders", href: "/profile/orders", icon: LuShoppingBag },
-                              { label: "Wishlist", href: "/shop?filter=wishlist", icon: LuHeart },
-                              { label: "Settings", href: "/profile/settings", icon: LuSettings },
-                            ].map((item) => {
-                              const Icon = item.icon;
-                              return (
+                            {user ? (
+                              <>
+                                <div className="px-4 py-3 border-b border-white/10 bg-white/[0.02]">
+                                  <p className="text-[9px] font-mono tracking-widest text-white/40 uppercase">Signed in as</p>
+                                  <p className="text-[11px] font-semibold text-white/95 truncate mt-0.5">{user.email}</p>
+                                </div>
+                                {[
+                                  { label: "My Profile", href: "/profile", icon: LuUser },
+                                  { label: "Orders", href: "/profile/orders", icon: LuShoppingBag },
+                                  { label: "Wishlist", href: "/shop?filter=wishlist", icon: LuHeart },
+                                  { label: "Settings", href: "/profile/settings", icon: LuSettings },
+                                ].map((item) => {
+                                  const Icon = item.icon;
+                                  return (
+                                    <Link
+                                      key={item.label}
+                                      href={item.href}
+                                      onClick={onClose}
+                                      className="flex items-center gap-3 px-4 py-3 text-[11px] font-mono text-white/70 hover:text-white hover:bg-white/[0.04] transition-colors cursor-none"
+                                    >
+                                      <Icon className="w-3.5 h-3.5 text-white/40" />
+                                      <span>{item.label}</span>
+                                    </Link>
+                                  );
+                                })}
+                                <div className="border-t border-white/10">
+                                  <button
+                                    onClick={() => {
+                                      logout();
+                                      setAccountOpen(false);
+                                      onClose();
+                                    }}
+                                    className="w-full flex items-center gap-3 px-4 py-3 text-[11px] font-mono text-red-400 hover:text-red-300 hover:bg-red-500/[0.04] transition-colors cursor-none"
+                                  >
+                                    <LuLogOut className="w-3.5 h-3.5 text-red-400/50" />
+                                    <span>Logout</span>
+                                  </button>
+                                </div>
+                              </>
+                            ) : (
+                              <div className="p-4 flex flex-col gap-2 bg-white/[0.02]">
                                 <Link
-                                  key={item.label}
-                                  href={item.href}
-                                  onClick={() => { onClose(); }}
-                                  className="flex items-center gap-3 px-4 py-3 text-[11px] font-mono text-white/70 hover:text-white hover:bg-white/[0.04] transition-colors cursor-none"
+                                  href="/login"
+                                  onClick={onClose}
+                                  className="flex w-full items-center justify-center rounded-lg bg-white py-2 font-mono text-[10px] tracking-widest uppercase text-black transition-colors hover:bg-white/90 text-center cursor-none font-semibold"
                                 >
-                                  <Icon className="w-3.5 h-3.5 text-white/40" />
-                                  <span>{item.label}</span>
+                                  Sign In
                                 </Link>
-                              );
-                            })}
-                            <div className="border-t border-white/10">
-                              <button
-                                onClick={() => { setAccountOpen(false); }}
-                                className="w-full flex items-center gap-3 px-4 py-3 text-[11px] font-mono text-red-400 hover:text-red-300 hover:bg-red-500/[0.04] transition-colors cursor-none"
-                              >
-                                <LuLogOut className="w-3.5 h-3.5 text-red-400/50" />
-                                <span>Logout</span>
-                              </button>
-                            </div>
+                                <Link
+                                  href="/signup"
+                                  onClick={onClose}
+                                  className="flex w-full items-center justify-center rounded-lg border border-white/10 bg-white/[0.03] hover:bg-white/[0.06] py-2 font-mono text-[10px] tracking-widest uppercase text-white transition-colors hover:border-white/20 text-center cursor-none"
+                                >
+                                  Create Account
+                                </Link>
+                              </div>
+                            )}
                           </div>
                         </motion.div>
                       )}

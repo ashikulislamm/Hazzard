@@ -1,4 +1,5 @@
 import Link from "next/link";
+import LoginForm from "./LoginForm";
 
 export const metadata = {
   title: "Login",
@@ -13,7 +14,7 @@ export default function LoginPage() {
           <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.12),transparent_35%),radial-gradient(circle_at_bottom_left,rgba(255,255,255,0.12),transparent_32%)]" />
           <div className="relative z-10">
             <p className="font-mono text-[0.65rem] tracking-[0.32em] uppercase text-white/45">Account Access</p>
-            <h1 className="mt-4 max-w-sm font-display text-4xl tracking-[0.16em] text-white sm:text-5xl">
+            <h1 className="mt-4 max-w-sm font-display text-4xl tracking-[0.16em] text-white sm:text-5xl uppercase">
               Sign in to continue
             </h1>
             <p className="mt-4 max-w-md text-sm leading-7 text-white/65 sm:text-base">
@@ -40,41 +41,7 @@ export default function LoginPage() {
               </div>
             </div>
 
-            <form className="mt-8 space-y-4">
-              <label className="block">
-                <span className="mb-2 block font-mono text-[0.65rem] tracking-[0.25em] uppercase text-white/45">
-                  Email
-                </span>
-                <input
-                  type="email"
-                  placeholder="name@example.com"
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 transition-colors focus:border-white/25 focus:bg-white/[0.07]"
-                />
-              </label>
-
-              <label className="block">
-                <div className="mb-2 flex items-center justify-between gap-4">
-                  <span className="font-mono text-[0.65rem] tracking-[0.25em] uppercase text-white/45">
-                    Password
-                  </span>
-                  <Link href="/signup" className="text-[0.72rem] text-white/55 underline decoration-white/25 underline-offset-4 transition-colors hover:text-white hover:decoration-white">
-                    Create account
-                  </Link>
-                </div>
-                <input
-                  type="password"
-                  placeholder="Your password"
-                  className="w-full rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-sm text-white outline-none placeholder:text-white/30 transition-colors focus:border-white/25 focus:bg-white/[0.07]"
-                />
-              </label>
-
-              <button
-                type="submit"
-                className="mt-2 flex w-full items-center justify-center rounded-full border border-white/10 bg-white px-5 py-3 font-mono text-[0.78rem] tracking-[0.22em] uppercase text-black transition-transform transition-colors hover:-translate-y-0.5 hover:bg-white/90"
-              >
-                Sign In
-              </button>
-            </form>
+            <LoginForm />
 
             <p className="mt-6 text-sm text-white/60">
               Don&apos;t have an account?{" "}

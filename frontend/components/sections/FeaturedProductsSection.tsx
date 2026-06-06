@@ -43,12 +43,7 @@ export default function FeaturedProductsSection() {
           <ProductCard
             key={product.id}
             mode="featured"
-            image={product.image}
-            name={product.name}
-            category={product.category}
-            price={`$${product.price}`}
-            tag={product.featuredTag}
-            href={`/products/${product.slug}`}
+            product={product}
           />
         ))}
       </div>

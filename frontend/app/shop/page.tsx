@@ -319,16 +319,7 @@ export default function ShopPage() {
                   {paginatedProducts.map((p) => (
                     <ProductCard
                       key={p.id}
-                      image={p.image}
-                      name={p.name}
-                      category={p.category}
-                      price={`$${p.price}`}
-                      label={p.label}
-                      isNew={p.isNew}
-                      href={`/products/${p.slug}`}
-                      onQuickAdd={() =>
-                        addItem({ id: p.id, name: p.name, variant: `${p.category} · M`, price: p.price, label: p.label })
-                      }
+                      product={p}
                       mediaClassName={getMediaHeightClass(gridCols)}
                     />
                   ))}
